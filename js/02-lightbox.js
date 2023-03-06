@@ -1,42 +1,39 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-const galleryListEl = document.querySelector(".gallery");
-galleryListEl.setAttribute("uk-lightbox", "caption-position:bottom");
+const galleryContainer = document.querySelector(".gallery");
+const card = galleryItemCreate(galleryItems);
+console.log(card);
 
-console.log(galleryListEl);
+galleryContainer.insertAdjacentHTML("beforeend", card);
+console.log(galleryContainer);
 
-galleryListEl.addEventListener("click", onGalleryListElClick);
+galleryContainer.addEventListener("click", onGalleryContainerClick);
 
-function createGalleryElement(array) {
-  return array.map(({ preview, original, description }) => {
-    const item = document.createElement("a");
-
-    item.href = original;
-    item.classList.add("gallery__item");
-    item.dataset.caption = description;
-    const image = document.createElement("img");
-    image.src = preview;
-    image.classList.add("gallery__image");
-    image.alt = description;
-    image.title = description;
-    image.delay = 250;
-    image.titlePosition = "top";
-    item.append(image);
-
-    return item;
-  });
+function galleryItemCreate(galleryItems) {
+  return galleryItems
+    .map(({ preview, original, description }) => {
+      return `<div class="gallery__item">
+               <a class="gallery__link" href="${original}">
+                <img
+                    class="gallery__image"
+                    src="${preview}"
+                    data-source="${original}"
+                    alt="${description}"
+                />
+                </a>
+                </div>`;
+    })
+    .join("");
 }
 
-const galleryElements = createGalleryElement(galleryItems);
-galleryListEl.append(...galleryElements);
-
-function onGalleryListElClick(e) {
+function onGalleryContainerClick(e) {
   e.preventDefault();
 
   if (e.target.nodeName !== "IMG") {
     return;
   }
+
 
   let href = e.target.closest("a").getAttribute("href");
   return href;
