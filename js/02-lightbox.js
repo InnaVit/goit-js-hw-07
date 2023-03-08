@@ -29,23 +29,13 @@ function galleryItemCreate(galleryItems) {
 
 function onGalleryContainerClick(e) {
   e.preventDefault();
-
-  if (e.target.nodeName !== "IMG") {
-    return;
-  }
-
-
-  let href = e.target.closest("a").getAttribute("href");
-  return href;
 }
+
+
 let gallery = new SimpleLightbox(".gallery a", {
   caption: true,
   captionDelay: 250,
 });
 
-gallery.on("show.simplelightbox", function () {});
 
-gallery.on("error.simplelightbox", function (e) {
-  console.log(e);
-});
 console.log(galleryItems);

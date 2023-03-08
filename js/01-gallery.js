@@ -41,11 +41,13 @@ function onGalleryContainerClick(e) {
 	`);
   instance.show();
 
-  window.addEventListener("keydown", (e) => {
+  window.addEventListener("keydown", handleEventListener, {once: true});
+
+  function handleEventListener(e) {
     if (e.code === "Escape") {
       instance.close();
     }
-  });
+  }
 }
 
 console.log(galleryItems);
